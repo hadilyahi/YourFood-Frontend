@@ -4,7 +4,7 @@ import axios from "axios";
 import RecipeCard from "./Card";
 import Link from "next/link";
 
-// تعريف نوع بيانات الوصفة
+
 type Recipe = {
   idMeal: string;
   strMealThumb: string;

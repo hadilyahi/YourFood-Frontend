@@ -23,7 +23,7 @@ const IngredientsInputCard = () => {
       });
 
       console.log("API Response:", response.data);
-      const firstFood = response.data.foods?.food?.[0]; // يأخذ أول عنصر من القائمة
+      const firstFood = response.data.foods?.food?.[0];
       setNutritionData(firstFood || null);
       
       

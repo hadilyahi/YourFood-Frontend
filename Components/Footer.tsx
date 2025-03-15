@@ -16,7 +16,7 @@ const Footer = () => {
           />
         </Link>
 
-        {/* Thank You Message */}
+     
         <div className="text-center flex flex-col gap-6">
           <h2 className="text-[40px] font-extrabold">Thank You</h2>
           <div>
@@ -25,7 +25,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Social Media */}
+       
         <div className="flex flex-col items-center gap-4">
           <div className="flex gap-4">
             <FaLinkedin className="text-white text-2xl cursor-pointer hover:text-gray-400" />

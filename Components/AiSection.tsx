@@ -32,7 +32,7 @@ function AiSection() {
       const data = await response.json();
       const content = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'تعذر توليد الوصفة.';
       
-      // استخراج التقييم والصنف من النص المسترجع
+     
      
       const categoryMatch = content.match(/الصنف:\s*(.*)/);
       
@@ -92,7 +92,7 @@ function AiSection() {
         )}
       </div>
   
-      {/* النافذة المنبثقة */}  
+    
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="max-w-lg bg-white rounded-xl p-6 shadow-lg">
           <DialogHeader>
@@ -102,12 +102,12 @@ function AiSection() {
             </DialogTitle>
           </DialogHeader>
 
-          {/* معلومات إضافية */}
+          
           <div className="text-gray-600 text-sm flex items-center gap-2">
             <span>🥄 {category}</span>
           </div>
 
-          {/* محتوى الوصفة مع سكرول بار */}
+       
           <div className="mt-4 max-h-[500px] overflow-auto pr-2 text-gray-900">
             {recipe.split('\n').map((line, index) => {
               if (line.includes('المكونات') || line.includes('طريقة التحضير')) {
