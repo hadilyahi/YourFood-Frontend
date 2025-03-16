@@ -65,34 +65,29 @@ export default function RecipeList() {
   }, []);
 
   return (
-    <div className="p-6">
-      <h1 className="text-[40px] font-extrabold text-center mb-12 mt-12">
+    <div className="p-4 md:p-6 max-w-6xl mx-auto">
+      <h1 className="text-[30px] md:text-[40px] font-extrabold text-center mb-8 md:mb-12 mt-8 md:mt-12">
         ألذ الوصفات
       </h1>
-      <div className="flex flex-wrap justify-center gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 justify-items-center">
         {recipes.map((recipe) => (
-          <div
+          <RecipeCard
             key={recipe.idMeal}
-            className="w-full sm:w-[48%] lg:w-[32%] flex justify-center"
-          >
-            <RecipeCard
-              key={recipe.idMeal}
-              id={recipe.idMeal}
-              imageUrl={recipe.strMealThumb}
-              title={recipe.strMeal}
-              category={recipe.strCategory || "غير معروف"}
-              cuisine={recipe.strArea || "غير معروف"}
-            />
-          </div>
+            id={recipe.idMeal}
+            imageUrl={recipe.strMealThumb}
+            title={recipe.strMeal}
+            category={recipe.strCategory || "غير معروف"}
+            cuisine={recipe.strArea || "غير معروف"}
+          />
         ))}
       </div>
-      <Link href="/recipes">
-        <div className="text-start mx-30 mt-6">
+      <div className="flex justify-center mt-6">
+        <Link href="/recipes">
           <button className="bg-[#FE590D] cursor-pointer text-white py-2 px-6 rounded-lg text-lg font-bold hover:bg-orange-600 transition">
             عرض الكل
           </button>
-        </div>
-      </Link>
+        </Link>
+      </div>
     </div>
   );
 }

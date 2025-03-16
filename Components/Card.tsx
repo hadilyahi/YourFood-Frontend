@@ -24,18 +24,18 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
   };
 
   return (
-    <div className="bg-black text-white rounded-2xl overflow-hidden w-64 shadow-lg transform transition duration-300 sm:scale-95 xs:scale-90">
-      <div className="relative w-full h-40">
-        <Image src={imageUrl} alt={`صورة لطبق ${title}`} layout="fill" objectFit="cover" />
+    <div className="bg-black text-white rounded-2xl overflow-hidden scale-95 shadow-lg transition duration-300 transform hover:scale-105 w-full max-w-xs sm:max-w-sm md:max-w-md">
+      <div className="relative w-full h-40  sm:h-48 md:h-56">
+        <Image src={imageUrl} alt={`صورة لطبق ${title}`} layout="fill" objectFit="cover" className="rounded-t-2xl" />
       </div>
-      <div className="p-4 text-center">
-        <h2 className="text-lg font-bold">{title}</h2>
-        <div className="flex justify-center gap-4 my-2 text-xs sm:text-sm">
+      <div className="p-4 text-center flex flex-col gap-2">
+        <h2 className="text-lg sm:text-xl font-bold">{title}</h2>
+        <div className="flex flex-wrap justify-center gap-4 text-xs sm:text-sm">
           <div className="flex items-center gap-1">
             <span className="text-[#FE590D] font-extrabold">{cuisine}</span>
             <span className="text-gray-300">المطبخ</span>
           </div>
-          <span className="text-gray-400">|</span>
+          <span className="text-gray-400 hidden sm:block">|</span>
           <div className="flex items-center gap-1">
             <span className="text-[#FE590D] font-extrabold">{category}</span>
             <span className="text-gray-300">الصنف</span>

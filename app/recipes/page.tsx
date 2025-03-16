@@ -22,6 +22,8 @@ const RecipesList = () => {
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [ingredient, setIngredient] = useState(""); 
   const [ingredients, setIngredients] = useState<string[]>([]); 
+  const [showCategoryFilter, setShowCategoryFilter] = useState(false);
+
 
   const categories = [
     "عرض الكل",
@@ -140,21 +142,35 @@ const RecipesList = () => {
   };
 
   return (
-    <div className="container mx-auto scale-95">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+
       <h1 className="text-[40px] font-extrabold text-center mb-12">جميع الوصفات</h1>
 
-      <div className="flex mx-8 mb-6">
+      <div className="flex mx-8 mb-6 gap-4">
         <button
           onClick={() => setShowFilterModal(true)}
-          className="flex items-end justify-end gap-2 bg-orange-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-orange-600 transition"
+          className="flex items-center gap-2 bg-orange-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-orange-600 transition"
         >
           <IoFilterSharp className="text-xl" />
           فلترة حسب المكونات
         </button>
+
+        <button
+          onClick={() => setShowCategoryFilter(true)}
+          className="md:hidden flex items-center gap-2 bg-gray-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-gray-700 transition"
+        >
+          <IoFilterSharp className="text-xl" />
+          فلترة حسب الأصناف
+        </button>
       </div>
 
+      
+
+
+
       <div className="flex flex-col md:flex-row gap-6">
-        <div className="w-full md:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+      <div className="w-full  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+ 
           {filteredRecipes.map((recipe, index) => (
             <RecipeCard
               key={`${recipe.idMeal}-${index}`}
@@ -166,10 +182,11 @@ const RecipesList = () => {
             />
           ))}
         </div>
-
-        <div className="w-full md:w-1/4 p-4 bg-white border-l-2 border-black">
-          <h2 className="text-[28px] text-center font-extrabold pb-2">حسب الأصناف</h2>
-          <ul className="mt-4 font-medium text-[25px] space-y-6">
+        <div className="flex flex-col md:flex-row gap-6">
+      
+        <div className="hidden md:flex flex-col w-64 bg-white p-6 rounded-lg shadow-lg border-r border-gray-300">
+          <h2 className="text-center text-2xl font-bold mb-4">حسب الأصناف</h2>
+          <ul className="space-y-6 font-medium text-[19px]">
             {categories.map((category, index) => (
               <li
                 key={index}
@@ -182,36 +199,81 @@ const RecipesList = () => {
             ))}
           </ul>
         </div>
+
+        {showCategoryFilter && (
+  <div className="fixed inset-0 flex items-start justify-center bg-opacity-50 backdrop-blur-sm z-10">
+    <div className="bg-white p-4 md:p-6 rounded-lg shadow-lg max-w-sm  scale-90 w-[300px] relative">
+
+      {/* زر الإغلاق */}
+      <button
+        onClick={() => setShowCategoryFilter(false)}
+        className="absolute top-2 left-2 text-gray-600 hover:text-red-500 text-2xl"
+      >
+        ✖
+      </button>
+
+      <h2 className="text-center text-2xl font-bold mb-4">فلترة حسب الأصناف</h2>
+
+      <ul className="mt-4 font-medium text-[19px] space-y-6">
+        {categories.map((category, index) => (
+          <li
+            key={index}
+            onClick={() => {
+              filterByCategory(category);
+              setShowCategoryFilter(false); // إغلاق القائمة بعد الاختيار
+            }}
+            className="flex justify-end items-center text-right gap-2 py-1 px-3 cursor-pointer"
+          >
+            <span className="text-black">{category}</span>
+            <FaUtensils className="text-orange-500 text-2xl" />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+)}
       </div>
 
       {showFilterModal && (
-        <div className="fixed inset-0 flex items-start justify-center bg-opacity-50 backdrop-blur-sm z-10">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96 relative scale-95 animate-fadeIn">
-            <h2 className="text-center text-2xl font-bold mb-4">فلترة حسب المكونات</h2>
+  <div className="fixed inset-0 flex items-start  justify-center bg-opacity-50 backdrop-blur-sm z-10">
+    <div className="bg-white p-4 md:p-6 mt-40 rounded-lg shadow-lg max-w-sm w-full relative">
+      <button
+        onClick={() => setShowFilterModal(false)}
+        className="absolute top-2 left-2 text-gray-600 hover:text-red-500 text-2xl"
+      >
+        ✖
+      </button>
 
-            <input
-              type="text"
-              placeholder="أدخل المكون واضغط Enter..."
-              className="w-full p-3 border rounded-lg mb-4 text-right"
-              value={ingredient}
-              onChange={(e) => setIngredient(e.target.value)}
-              onKeyDown={handleIngredientKeyPress}
-            />
+      <h2 className="text-center text-2xl font-bold mb-4">فلترة حسب المكونات</h2>
 
-            <div className="space-y-2 mb-4">
-              {ingredients.map((ing, index) => (
-                <div key={index} className="flex justify-between items-center bg-gray-100 p-2 rounded-lg">
-                  <span>{ing}</span>
-                  <button onClick={() => setIngredients(ingredients.filter((item) => item !== ing))} className="text-red-500 hover:text-red-700 text-xl">✖</button>
-                </div>
-              ))}
-            </div>
+      <input
+        type="text"
+        placeholder="أدخل المكون واضغط Enter..."
+        className="w-full p-3 border rounded-lg mb-4 text-right"
+        value={ingredient}
+        onChange={(e) => setIngredient(e.target.value)}
+        onKeyDown={handleIngredientKeyPress}
+      />
 
-            <button onClick={filterByIngredients} className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600">استخراج وصفات</button>
+      <div className="space-y-2 mb-4">
+        {ingredients.map((ing, index) => (
+          <div key={index} className="flex justify-between items-center bg-gray-100 p-2 rounded-lg">
+            <span>{ing}</span>
+            <button onClick={() => setIngredients(ingredients.filter((item) => item !== ing))} className="text-red-500 hover:text-red-700 text-xl">✖</button>
           </div>
-        </div>
-      )}
+        ))}
+      </div>
+
+      <button onClick={filterByIngredients} className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600">
+        استخراج وصفات
+      </button>
     </div>
+  </div>
+)}
+     
+    </div>
+    </div>
+
   );
 };
 

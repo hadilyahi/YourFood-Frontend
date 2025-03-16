@@ -129,7 +129,20 @@ const translateIngredients = async (ingredients: string[]) => {
           </p>
         </div>
       </div>
-      <p className="text-center text-sm text-red-600 mt-6"> ملاحظة: الترجمة ستتوفر بعد 24 ساعة.</p>
+      {recipe.strYoutube && (
+  <div className="flex justify-center mt-6">
+    <a
+      href={recipe.strYoutube}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="bg-[#FE590D] text-white px-6 py-2 rounded-lg text-lg font-semibold shadow-md transition-transform transform hover:scale-105"
+    >
+      شاهد الوصفة على يوتيوب 
+    </a>
+  </div>
+)}
+
+      <p className="text-center text-sm text-red-600 mt-6"> ملاحظة: اذا الوصفة ليست مترجمة فان الترجمة ستتوفر بعد 24 ساعة.</p>
     </div>
   );
 };

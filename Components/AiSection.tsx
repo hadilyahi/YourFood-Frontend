@@ -8,7 +8,6 @@ function AiSection() {
   const [ingredients, setIngredients] = useState('');
   const [recipe, setRecipe] = useState('');
   const [category, setCategory] = useState('');
-
   const [isOpen, setIsOpen] = useState(false);
   const MODEL_NAME = "gemini-1.5-flash";
 
@@ -31,14 +30,8 @@ function AiSection() {
 
       const data = await response.json();
       const content = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'تعذر توليد الوصفة.';
-      
-     
-     
       const categoryMatch = content.match(/الصنف:\s*(.*)/);
-      
-     
       setCategory(categoryMatch ? categoryMatch[1] : 'غير معروف');
-      
       return content;
     } catch (error) {
       console.error('Error generating recipe:', error);
@@ -64,16 +57,16 @@ function AiSection() {
   };
 
   return (
-    <div id='generate-recipes' className="flex flex-col items-center py-10 px-4">
-      <h2 className="text-[35px] font-bold text-center mb-4">
+    <div id='generate-recipes' className="flex flex-col items-center py-10 px-4 w-full max-w-2xl mx-auto">
+      <h2 className="text-2xl md:text-3xl font-bold text-center mb-4">
         توليد الوصفات بالذكاء الاصطناعي
       </h2>
       
-      <div className="bg-black h-[500px] w-[600px] text-white rounded-xl p-6 flex flex-col justify-around max-w-md shadow-lg">
+      <div className="bg-black text-white rounded-xl p-6 flex flex-col justify-between shadow-lg w-full max-w-md">
         <p className="text-lg text-center mb-4">ادخل وصف للطبق الذي تريده</p>
         
         <textarea
-          className="bg-white text-gray-700  text-right border-none p-3 w-full h-[250px] rounded-lg shadow-sm focus:outline-none"
+          className="bg-white text-gray-700 text-right border-none p-3 w-full h-40 md:h-52 rounded-lg shadow-sm focus:outline-none"
           placeholder="اكتب وصفاً دقيقاً"
           value={ingredients}
           onChange={(e) => setIngredients(e.target.value)}
@@ -92,33 +85,28 @@ function AiSection() {
         )}
       </div>
   
-    
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-lg bg-white rounded-xl p-6 shadow-lg">
+        <DialogContent className="max-w-lg bg-white rounded-xl p-6 shadow-lg w-full">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold flex items-center justify-between">
               <span className="text-orange-500">🍽️ الوصفة</span>
-             
             </DialogTitle>
           </DialogHeader>
 
-          
           <div className="text-gray-600 text-sm flex items-center gap-2">
             <span>🥄 {category}</span>
           </div>
 
-       
-          <div className="mt-4 max-h-[500px] overflow-auto pr-2 text-gray-900">
-            {recipe.split('\n').map((line, index) => {
-              if (line.includes('المكونات') || line.includes('طريقة التحضير')) {
-                return (
-                  <h4 key={index} className="font-bold text-lg  mt-3">
-                    {line}
-                  </h4>
-                );
-              }
-              return <p key={index} className="text-gray-700 leading-relaxed">{line}</p>;
-            })}
+          <div className="mt-4 max-h-80 overflow-auto pr-2 text-gray-900">
+            {recipe.split('\n').map((line, index) => (
+              line.includes('المكونات') || line.includes('طريقة التحضير') ? (
+                <h4 key={index} className="font-bold text-lg mt-3">
+                  {line}
+                </h4>
+              ) : (
+                <p key={index} className="text-gray-700 leading-relaxed">{line}</p>
+              )
+            ))}
           </div>
         </DialogContent>
       </Dialog>
