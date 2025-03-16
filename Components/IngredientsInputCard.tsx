@@ -75,8 +75,9 @@ const IngredientsInputCard = () => {
       </button>
 
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm p-4">
-          <div className="bg-gray-800 p-4 md:p-6 rounded-lg w-full max-w-md text-white text-center">
+        <div className="fixed inset-0 flex items-center justify-center  bg-opacity-50 backdrop-blur-sm p-4">
+          <div className="bg-gray-800 p-4 md:p-6 rounded-lg w-full max-w-md text-white text-center max-h-[80vh] overflow-y-auto">
+
             <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3">القيم الغذائية</h3>
             {nutritionData ? (
               <>
